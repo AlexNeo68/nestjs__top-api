@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Param, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
 import { ReviewModel } from 'src/review/review.model';
 
 @Controller('review')
@@ -8,4 +8,7 @@ export class ReviewController {
 
   @Delete(':id')
   async delete(@Param() id: string) {}
+
+  @Get('byProduct/:productId')
+  async getByProduct(@Param('productId') productId: string) {}
 }
