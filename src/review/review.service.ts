@@ -1,9 +1,12 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { ReviewModel } from './review.model';
 import { DocumentType, ModelType } from '@typegoose/typegoose/lib/types';
 import { ReviewDto } from './dto/review.dto';
 import { Types } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
+
+class Leak {}
+const leaks = [];
 
 @Injectable()
 export class ReviewService {
@@ -22,6 +25,7 @@ export class ReviewService {
   async findByProducId(
     productId: string,
   ): Promise<DocumentType<ReviewModel>[]> {
+    leaks.push(new Leak());
     return this.reviewModel
       .find({ productId: new Types.ObjectId(productId) })
       .exec();

@@ -7,6 +7,8 @@ import {
   HttpStatus,
   Param,
   Post,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 
 import { ReviewDto } from './dto/review.dto';
@@ -17,6 +19,7 @@ import { REVIEW_NOT_FOUND } from './review.contstants';
 export class ReviewController {
   constructor(private readonly reviewService: ReviewService) {}
 
+  @UsePipes(new ValidationPipe())
   @Post('create')
   async create(@Body() dto: ReviewDto) {
     return this.reviewService.create(dto);
