@@ -16,6 +16,7 @@ export class ReviewService {
   ) {}
 
   async create(dto: ReviewDto): Promise<DocumentType<ReviewModel>> {
+    dto.productId = new Types.ObjectId(dto.productId);
     return this.reviewModel.create(dto);
   }
   async delete(id: string): Promise<DocumentType<ReviewModel> | null> {

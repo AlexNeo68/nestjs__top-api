@@ -1,4 +1,5 @@
 import { IsString, IsNumber, Max, Min } from 'class-validator';
+import { Types } from 'mongoose';
 export class ReviewDto {
   @IsString({ message: 'Заголовок должен быть строкой' })
   title: string;
@@ -15,5 +16,5 @@ export class ReviewDto {
   rating: number;
 
   @IsString({ message: 'Необходимо указать ID связанного с отзывом товара' })
-  productId: string;
+  productId: Types.ObjectId;
 }
