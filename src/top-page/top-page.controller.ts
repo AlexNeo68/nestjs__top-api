@@ -37,6 +37,15 @@ export class TopPageController {
     return topPage;
   }
 
+  @Get('by-alias/:alias')
+  async findByAlias(@Param('alias') alias: string) {
+    const topPage = await this.topPageService.findByAlias(alias);
+    if (!topPage) {
+      throw new NotFoundException(TOP_PAGE_NOT_FOUND);
+    }
+    return topPage;
+  }
+
   @Patch(':id')
   async update(
     @Param('id', IdValidationPipe) id: string,
@@ -58,6 +67,11 @@ export class TopPageController {
   @HttpCode(200)
   @Post('find')
   async find(@Body() dto: FindTopPageDto) {
-    return await this.topPageService.find(dto);
+    return await this.topPageService.findByFirstCategory(dto);
+  }
+
+  @Get('text-search/:text')
+  async textSearch(@Param('text') text: string) {
+    return await this.topPageService.findByText(text);
   }
 }

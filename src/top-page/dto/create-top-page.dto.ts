@@ -48,6 +48,9 @@ export class CreateTopPageDto {
   title: string;
 
   @IsString()
+  alias: string;
+
+  @IsString()
   category: string;
 
   @IsOptional()

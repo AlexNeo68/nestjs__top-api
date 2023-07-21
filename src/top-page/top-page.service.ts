@@ -21,6 +21,23 @@ export class TopPageService {
     return await this.topPageModel.findById(new Types.ObjectId(id));
   }
 
+  async findByAlias(alias: string) {
+    return await this.topPageModel.findOne({ alias });
+  }
+
+  async findByFirstCategory(dto: FindTopPageDto) {
+    return await this.topPageModel.find(
+      { firstCategory: dto.firstCategory },
+      { title: 1, firstCategory: 1, alias: 1, secondaryCategory: 1 },
+    );
+  }
+
+  async findByText(text: string) {
+    return await this.topPageModel.find({
+      $text: { $search: text, $caseSensitive: false },
+    });
+  }
+
   async deleteById(id: string) {
     return await this.topPageModel.findByIdAndRemove(new Types.ObjectId(id));
   }
@@ -31,9 +48,5 @@ export class TopPageService {
       dto,
       { new: true },
     );
-  }
-
-  async find(dto: FindTopPageDto) {
-    return await this.topPageModel.find({ firstCategory: dto.firstCategory });
   }
 }
