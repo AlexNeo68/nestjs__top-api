@@ -26,10 +26,38 @@ export class TopPageService {
   }
 
   async findByFirstCategory(dto: FindTopPageDto) {
-    return await this.topPageModel.find(
-      { firstCategory: dto.firstCategory },
-      { title: 1, firstCategory: 1, alias: 1, secondaryCategory: 1 },
-    );
+    // return await this.topPageModel
+    //   .aggregate()
+    //   .match({
+    //     firstCategory: dto.firstCategory,
+    //   })
+    //   .group({
+    //     _id: { secondaryCategory: '$secondaryCategory' },
+    //     pages: {
+    //       $push: {
+    //         title: '$title',
+    //         alias: '$alias',
+    //         category: '$category',
+    //         _id: '$_id',
+    //       },
+    //     },
+    //   });
+    return await this.topPageModel
+      .aggregate()
+      .match({
+        firstCategory: dto.firstCategory,
+      })
+      .group({
+        _id: { secondaryCategory: '$secondaryCategory' },
+        pages: {
+          $push: {
+            alias: '$alias',
+            title: '$title',
+            _id: '$_id',
+            category: '$category',
+          },
+        },
+      });
   }
 
   async findByText(text: string) {

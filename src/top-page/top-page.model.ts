@@ -35,7 +35,7 @@ export interface TopPageModel extends Base {}
 @index({ '$**': 'text' })
 export class TopPageModel extends TimeStamps {
   @prop()
-  firstCategory: string;
+  firstCategory: TopLevelCategory;
 
   @prop()
   secondaryCategory: string;
