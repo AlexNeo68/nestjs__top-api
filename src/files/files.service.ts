@@ -8,8 +8,6 @@ import { MFile } from 'src/files/mfile.class';
 @Injectable()
 export class FilesService {
   async saveFiles(files: MFile[]): Promise<FilesElementResponse[]> {
-    console.log(files);
-
     const dateFolder = format(new Date(), 'yyyy-MM-dd');
     const uploadFolder = `${path}/uploads/${dateFolder}`;
     await ensureDir(uploadFolder);
